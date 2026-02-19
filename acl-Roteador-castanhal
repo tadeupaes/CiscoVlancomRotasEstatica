@@ -1,0 +1,57 @@
+
+---
+
+# 📄 acls/acl-castanhal.md
+
+```markdown
+# ACLs - Roteador Castanhal (R-CASTANHAL)
+
+Regras aplicadas para garantir que:
+
+- **VLAN 10 (Castanhal)** só se comunique com **VLAN 10 (Belém)**
+- **VLAN 20 (Castanhal)** só se comunique com **VLAN 20 (Belém)**
+- Bloquear comunicação cruzada entre VLANs (local e remota)
+
+---
+
+## 🔹 Redes envolvidas
+
+### Castanhal
+- VLAN 10: `192.168.110.0/24`
+- VLAN 20: `192.168.120.0/24`
+
+### Belém
+- VLAN 10: `192.168.10.0/24`
+- VLAN 20: `192.168.20.0/24`
+
+---
+
+## 🔹 Configuração (aplicar no R-CASTANHAL)
+
+> Aplicação **INBOUND** nas subinterfaces:
+- `Fa0/0.10` (VLAN 10)
+- `Fa0/0.20` (VLAN 20)
+
+```cisco
+conf t
+
+ip access-list extended CAST_VLAN10_POLICY
+ permit ip 192.168.110.0 0.0.0.255 192.168.10.0 0.0.0.255
+ deny   ip 192.168.110.0 0.0.0.255 192.168.20.0 0.0.0.255
+ deny   ip 192.168.110.0 0.0.0.255 192.168.120.0 0.0.0.255
+ permit ip 192.168.110.0 0.0.0.255 any
+
+ip access-list extended CAST_VLAN20_POLICY
+ permit ip 192.168.120.0 0.0.0.255 192.168.20.0 0.0.0.255
+ deny   ip 192.168.120.0 0.0.0.255 192.168.10.0 0.0.0.255
+ deny   ip 192.168.120.0 0.0.0.255 192.168.110.0 0.0.0.255
+ permit ip 192.168.120.0 0.0.0.255 any
+
+interface fa0/0.10
+ ip access-group CAST_VLAN10_POLICY in
+
+interface fa0/0.20
+ ip access-group CAST_VLAN20_POLICY in
+
+end
+wr
