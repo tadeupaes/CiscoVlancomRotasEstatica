@@ -29,3 +29,10 @@ VLAN20: 192.168.120.0/24
 - Senhas criptografadas
 - Port Security
 - ACLs restritivas
+
+### - SEQUENCIA
+
+- Switch
+- Rotedor
+- ACL
+
