@@ -9,78 +9,33 @@ enable
 conf t
 hostname SW-BELEM
 no ip domain-lookup
-service password-encryption
-enable secret S3nh@F0rt3
-
-banner motd ^C
-*** ACESSO RESTRITO - SW-BELEM ***
-^C
-
-! ================= VLANs =================
 
 vlan 10
  name PREFEITURA
-
 vlan 20
  name HOSPITAL
 
-! ================= TRUNK =================
-
+! TRUNK para o roteador (ajuste a porta se necessário)
 interface fa0/1
  description LINK-ROTEADOR
  switchport mode trunk
  switchport trunk allowed vlan 10,20
  spanning-tree portfast trunk
 
-! ================= PORTAS DE USUÁRIO =================
-
+! PORTAS DE USUÁRIO (ajuste conforme seu diagrama)
 interface fa0/2
- description PC-PREFEITURA
+ description PC-BEL1 (VLAN10)
  switchport mode access
  switchport access vlan 10
  spanning-tree portfast
  spanning-tree bpduguard enable
 
 interface fa0/3
- description PC-HOSPITAL
+ description PC-BEL2 (VLAN20)
  switchport mode access
  switchport access vlan 20
  spanning-tree portfast
  spanning-tree bpduguard enable
-
-! ================= PORT SECURITY =================
-
-interface range fa0/2 - 3
- switchport port-security
- switchport port-security maximum 1
- switchport port-security mac-address sticky
- switchport port-security violation restrict
-
-! ================= PORTAS NÃO UTILIZADAS =================
-
-interface range fa0/4 - 24, gig0/1 - 2
- shutdown
- description UNUSED
-
-! ================= IP DE GERÊNCIA =================
-
-interface vlan 10
- ip address 192.168.10.2 255.255.255.0
- no shutdown
-
-ip default-gateway 192.168.10.1
-
-! ================= SSH =================
-
-ip domain-name lab.local
-username admin privilege 15 secret Adm1n@123
-crypto key generate rsa                    (2048)
-ip ssh version 2
-
-line vty 0 4
- login local
- transport input ssh
- exec-timeout 10 0
 
 end
 wr
