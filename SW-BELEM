@@ -1,0 +1,60 @@
+enable
+conf t
+hostname SW-BELEM
+no ip domain-lookup
+service password-encryption
+enable secret S3nh@F0rt3
+
+banner motd ^C
+*** ACESSO RESTRITO - SW-BELEM ***
+^C
+
+vlan 10
+ name PREFEITURA
+vlan 20
+ name HOSPITAL
+
+interface fa0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+ spanning-tree portfast trunk
+
+interface fa0/2
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+
+interface fa0/3
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+
+interface range fa0/2 - 3
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+
+interface range fa0/4 - 24, gig0/1 - 2
+ shutdown
+ description UNUSED
+
+interface vlan 10
+ ip address 192.168.10.2 255.255.255.0
+ no shutdown
+
+ip default-gateway 192.168.10.1
+
+ip domain-name lab.local
+username admin privilege 15 secret Adm1n@123
+crypto key generate rsa modulus 2048
+ip ssh version 2
+
+line vty 0 4
+ login local
+ transport input ssh
+ exec-timeout 10 0
+end
+wr
