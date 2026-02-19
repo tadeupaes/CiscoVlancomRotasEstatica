@@ -1,6 +1,9 @@
 # Cisco
 # Projeto Redes - Belém e Castanhal
 
+
+![Texto alternativo](projeto.png)
+
 Projeto acadêmico de interligação de duas cidades utilizando:
 
 - VLANs
