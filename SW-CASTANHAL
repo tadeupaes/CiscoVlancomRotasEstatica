@@ -1,10 +1,3 @@
-!
-! =============================================
-! SWITCH CASTANHAL - SW-CASTANHAL
-! Projeto Redes Belém e Castanhal
-! =============================================
-!
-
 enable
 conf t
 hostname SW-CASTANHAL
