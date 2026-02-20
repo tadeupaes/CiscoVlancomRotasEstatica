@@ -15,17 +15,17 @@ Projeto acadêmico de interligação de duas cidades utilizando:
 ### WAN
 200.200.200.0/24
 
-### Belém - 192.168.0.0/24
-VLAN10: PREFEITURA
-VLAN20: HOSPITAL
+### Belém - 
+VLAN10: PREFEITURA - 192.168.0.0/24
+VLAN20: HOSPITAL - 192.168.1.0/24
 
-### Castanhal - 192.168.1.0/24
-VLAN10: PREFEITURA
-VLAN20: HOSPITAL
+### Castanhal
+VLAN10: PREFEITURA  - 192.168.2.0/24
+VLAN20: HOSPITAL -  - 192.168.3.0/24
 
 ### - SEQUENCIA
 
 - Switch
 - Rotedor
-- ACL
+- ACL No roteador
 
