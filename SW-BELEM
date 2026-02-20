@@ -8,34 +8,23 @@
 enable
 conf t
 hostname SW-BELEM
-no ip domain-lookup
 
 vlan 10
  name PREFEITURA
 vlan 20
  name HOSPITAL
 
-! TRUNK para o roteador (ajuste a porta se necessário)
 interface fa0/1
- description LINK-ROTEADOR
  switchport mode trunk
  switchport trunk allowed vlan 10,20
- spanning-tree portfast trunk
 
-! PORTAS DE USUÁRIO (ajuste conforme seu diagrama)
 interface fa0/2
- description PC-BEL1 (VLAN10)
  switchport mode access
  switchport access vlan 10
- spanning-tree portfast
- spanning-tree bpduguard enable
 
 interface fa0/3
- description PC-BEL2 (VLAN20)
  switchport mode access
  switchport access vlan 20
- spanning-tree portfast
- spanning-tree bpduguard enable
 
 end
 wr
