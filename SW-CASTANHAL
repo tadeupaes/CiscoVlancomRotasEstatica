@@ -1,34 +1,23 @@
 enable
 conf t
 hostname SW-CASTANHAL
-no ip domain-lookup
 
 vlan 10
  name PREFEITURA
 vlan 20
  name HOSPITAL
 
-! TRUNK para o roteador
 interface fa0/1
- description LINK-ROTEADOR
  switchport mode trunk
  switchport trunk allowed vlan 10,20
- spanning-tree portfast trunk
 
-! PORTAS DE USUÁRIO
 interface fa0/2
- description PC-CAST1 (VLAN10)
  switchport mode access
  switchport access vlan 10
- spanning-tree portfast
- spanning-tree bpduguard enable
 
 interface fa0/3
- description PC-CAST2 (VLAN20)
  switchport mode access
  switchport access vlan 20
- spanning-tree portfast
- spanning-tree bpduguard enable
 
 end
 wr
