@@ -1,0 +1,23 @@
+enable
+configure terminal
+
+hostname R1
+ip domain-name suaempresa.local
+
+username admin secret SenhaForte123
+
+crypto key generate rsa
+1024
+
+ip ssh version 2
+
+line vty 0 4
+login local
+transport input ssh
+exit
+
+service password-encryption
+enable secret SenhaEnable123
+
+end
+write memory
