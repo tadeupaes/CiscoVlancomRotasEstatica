@@ -1,0 +1,19 @@
+enable
+configure terminal
+hostname ROTEADOR
+enable secret cisco123
+service password-encryption
+username admin secret 123456
+ip domain-name escola.local
+crypto key generate rsa
+ip ssh version 2
+line console 0
+login local
+exit
+line vty 0 4
+login local
+transport input ssh
+exit
+banner motd # ACESSO RESTRITO! USO SOMENTE AUTORIZADO #
+end
+write memory
