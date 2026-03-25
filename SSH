@@ -1,21 +1,46 @@
 enable
 configure terminal
 
-hostname R1
+hostname SW1
 ip domain-name suaempresa.local
 
 username admin secret SenhaForte123
 
+! 🔹 Criar VLAN de gerenciamento
+vlan 10
+name GERENCIA
+exit
+
+! 🔹 Interface da VLAN (IP do switch)
+interface vlan 10
+ip address 192.168.10.2 255.255.255.0
+no shutdown
+exit
+
+! 🔹 Gateway (para acesso remoto de outra rede)
+ip default-gateway 192.168.10.1
+
+! 🔹 Colocar porta na VLAN (ESSENCIAL)
+interface fa0/1
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+
+! 🔹 Gerar chave RSA
 crypto key generate rsa
 1024
 
+! 🔹 Ativar SSH
 ip ssh version 2
 
+! 🔹 Configurar acesso remoto
 line vty 0 4
 login local
 transport input ssh
 exit
 
+! 🔹 Segurança básica
 service password-encryption
 enable secret SenhaEnable123
 
